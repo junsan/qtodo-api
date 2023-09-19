@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaskRequest;
 use App\Http\Resources\TodoListsResource;
 use App\Models\TodoList;
 use Illuminate\Http\Request;
@@ -27,9 +28,11 @@ class TodoListsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TaskRequest $request)
     {
-        //
+        $task = TodoList::create($request->validated());
+
+        return TodoListsResource::make($task);
     }
 
     /**
