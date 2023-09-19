@@ -13,7 +13,7 @@ class TasksController extends Controller
      */
     public function index()
     {
-        return TasksResource::collection(Task::where('todo_list_id', '1')->get());
+        return TasksResource::collection(Task::where('user_id', '1')->where('is_completed', false)->get());
     }
 
     /**
