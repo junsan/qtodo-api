@@ -2,30 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TodoListsResource;
+use App\Models\TodoList;
 use Illuminate\Http\Request;
-use App\Models\Task;
-use App\Http\Resources\TasksResource;
 
-class TasksController extends Controller
+class TodoListsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return TasksResource::collection(Task::where('user_id', '1')->where('is_completed', false)->get());
-    }
-
-    public function completed() {
-        return TasksResource::collection(Task::where('user_id', '1')->where('is_completed', true)->get());
-    }
-
-    public function getTasksByList($list_id) {
-        return TasksResource::collection(Task::where('user_id', '1')->where('todo_list_id', $list_id)->where('is_completed', false)->get());
-    }
-
-    public function getTasksCompletedByList($list_id) {
-        return TasksResource::collection(Task::where('user_id', '1')->where('todo_list_id', $list_id)->where('is_completed', true)->get());
+        return TodoListsResource::collection(TodoList::where('user_id', '1')->get());
     }
 
     /**
