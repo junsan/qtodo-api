@@ -4,8 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\TodoList;
 
 class Task extends Model
 {
     use HasFactory;
+
+    public function list() {
+        return $this->belongsTo(TodoList::class);
+    }
 }
