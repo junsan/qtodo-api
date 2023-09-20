@@ -11,6 +11,13 @@ class Task extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'todo_list_id',
+        'name',
+        'due_date'
+    ];
+
     public function list() {
         return $this->belongsTo(TodoList::class);
     }
