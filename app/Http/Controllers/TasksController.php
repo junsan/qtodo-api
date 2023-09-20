@@ -74,8 +74,10 @@ class TasksController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $task = Task::where('id', $id)->first();
+        Task::destroy($id);
+        return TasksResource::make($task);
     }
 }
