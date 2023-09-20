@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TasksController;
 use App\Http\Controllers\TodoListsController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +28,4 @@ Route::get('/list_tasks/{list}', [TasksController::class, 'getTasksByList'])->na
 Route::get('/list_tasks_completed/{list}', [TasksController::class, 'getTasksCompletedByList'])->name('task.list_tasks_completed');
 
 Route::get('/completed', [TasksController::class, 'completed'])->name('task.completed');
+Route::post('/login', [UserController::class, 'login'])->name('login');
