@@ -14,14 +14,19 @@ class UserController extends Controller
     
     public function login(UserRequest $request) 
     {
-        if (Auth::attempt($request->validated())) {
-            $user = User::where('email', $request->email)->first(); 
-            $success['token'] =  $user->createToken('qtodo-token')->accessToken; 
-            $success['name'] =  $user->name;
+        $user = User::where('email', $request->email)->first();
 
-            return response()->json(["success" => true, "login" => true, "token" => $success['token'], "name" => $success['name']]);
-        } else{ 
-            return response()->json(['error' => 'Unauthorised', "login" => false]);
-        } 
+        if($user) {
+            if (Auth::attempt($request->validated())) {
+                //$user = User::where('email', $request->email)->first(); 
+                $success['token'] =  $user->createToken('qtodo-token')->accessToken; 
+                $success['name'] =  $user->name;
+                $success['email'] =  $user->email;
+
+                return response()->json(["success" => true, "login" => true, "token" => $success['token'], "name" => $success['name'], "email" => $success['email']]);
+            } else { 
+                return response()->json(['error' => 'Password not correct.', "login" => false]);
+            } 
+        }
     } 
 }
