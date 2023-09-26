@@ -17,6 +17,11 @@ class TodoListsController extends Controller
         return TodoListsResource::collection(TodoList::where('user_id', '1')->get());
     }
 
+    public function getListById($id) 
+    {
+        return TodoListsResource::collection(TodoList::where('user_id', $id)->get());
+    }
+
     /**
      * Show the form for creating a new resource.
      */

@@ -22,7 +22,7 @@ class TasksController extends Controller
     }
 
     public function getTasksByList($list_id) {
-        return TasksResource::collection(Task::where('user_id', '1')->where('todo_list_id', $list_id)->where('is_completed', false)->get());
+        return TasksResource::collection(Task::where('todo_list_id', $list_id)->where('is_completed', false)->get());
     }
 
     public function getTasksCompletedByList($list_id) {

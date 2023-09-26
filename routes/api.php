@@ -23,9 +23,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('/tasks', TasksController::class);
 Route::apiResource('/lists', TodoListsController::class);
+Route::get('/list_id/{list}', [TodoListsController::class, 'getListById']);
 
 Route::get('/list_tasks/{list}', [TasksController::class, 'getTasksByList'])->name('task.list_tasks');
 Route::get('/list_tasks_completed/{list}', [TasksController::class, 'getTasksCompletedByList'])->name('task.list_tasks_completed');
+
 
 Route::get('/completed', [TasksController::class, 'completed'])->name('task.completed');
 Route::post('/login', [UserController::class, 'login'])->name('login');

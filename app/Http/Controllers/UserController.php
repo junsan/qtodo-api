@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\User;
 use Laravel\Sanctum\HasApiTokens;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -23,10 +24,18 @@ class UserController extends Controller
                 $success['name'] =  $user->name;
                 $success['email'] =  $user->email;
 
-                return response()->json(["success" => true, "login" => true, "token" => $success['token'], "name" => $success['name'], "email" => $success['email']]);
+                return response()->json(["success" => true, "login" => true, "token" => $success['token'], "name" => $success['name'], "email" => $success['email'], "id" => $user->id]);
             } else { 
                 return response()->json(['error' => 'Password not correct.', "login" => false]);
             } 
+        } else {
+            $user = User::create([
+                'name' => '',
+                'email' => $request->email,
+                'password' => Hash::make($request->password)
+            ]);
+
+            return response()->json(["success" => true, "login" => true, "token" => 'qtodo-token', "email" => $user->email, "id" => $user->id]);
         }
     } 
 }
