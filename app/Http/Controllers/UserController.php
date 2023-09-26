@@ -21,11 +21,12 @@ class UserController extends Controller
         if($user) {
             if (Auth::attempt($request->validated())) {
                 //$user = User::where('email', $request->email)->first(); 
+                $todoList = TodoList::where('user_id', $user->id)->where('name', 'General')->first();
                 $success['token'] =  $user->createToken('qtodo-token')->accessToken; 
                 $success['name'] =  $user->name;
                 $success['email'] =  $user->email;
 
-                return response()->json(["success" => true, "login" => true, "token" => $success['token'], "name" => $success['name'], "email" => $success['email'], "id" => $user->id]);
+                return response()->json(["success" => true, "login" => true, "token" => $success['token'], "name" => $success['name'], "email" => $success['email'], "id" => $user->id, 'listId' => $todoList->id]);
             } else { 
                 return response()->json(['error' => 'Password not correct.', "login" => false]);
             } 
@@ -59,4 +60,11 @@ class UserController extends Controller
             return response()->json(["success" => true, "login" => true, "token" => 'qtodo-token', "email" => $user->email, "id" => $user->id, 'listId' => $todoList->id]);
         }
     } 
+
+    public function automaticLogin($id) {
+        $user = User::where('id', $id)->first();
+        $todoList = TodoList::where('user_id', $user->id)->where('name', 'General')->first();
+        
+        return response()->json(["success" => true, "login" => true, "token" => 'qtodo-token', "email" => $user->email, "id" => $user->id, 'listId' => $todoList->id]);
+    }
 }

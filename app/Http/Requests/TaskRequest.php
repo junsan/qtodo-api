@@ -24,8 +24,7 @@ class TaskRequest extends FormRequest
         return [
             'user_id' => 'required',
             'todo_list_id' => 'required',
-            'name' => 'required|string|max:255',
-            'due_date' => 'date_format:Y-m-d'
+            'name' => 'required|string|max:255'
         ];
     }
 }
