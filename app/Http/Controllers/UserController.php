@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\User;
+use App\Models\TodoList;
 use Laravel\Sanctum\HasApiTokens;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +36,27 @@ class UserController extends Controller
                 'password' => Hash::make($request->password)
             ]);
 
-            return response()->json(["success" => true, "login" => true, "token" => 'qtodo-token', "email" => $user->email, "id" => $user->id]);
+            $todoList = TodoList::create([
+                'user_id' => $user->id,
+                'name' => 'General'
+            ]);
+
+            TodoList::create([
+                'user_id' => $user->id,
+                'name' => 'Personal'
+            ]);
+
+            TodoList::create([
+                'user_id' => $user->id,
+                'name' => 'Shopping'
+            ]);
+
+            TodoList::create([
+                'user_id' => $user->id,
+                'name' => 'Work'
+            ]);
+
+            return response()->json(["success" => true, "login" => true, "token" => 'qtodo-token', "email" => $user->email, "id" => $user->id, 'listId' => $todoList->id]);
         }
     } 
 }
