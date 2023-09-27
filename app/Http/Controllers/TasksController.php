@@ -25,8 +25,22 @@ class TasksController extends Controller
         return TasksResource::collection(Task::where('todo_list_id', $list_id)->where('is_completed', false)->get());
     }
 
-    public function getTasksCompletedByList($list_id) {
-        return TasksResource::collection(Task::where('user_id', '1')->where('todo_list_id', $list_id)->where('is_completed', true)->get());
+    public function getTasksCompleted($id) {
+        return TasksResource::collection(Task::where('user_id', $id)->where('is_completed', true)->get());
+    }
+
+    public function unCompletedTask($id) {
+        $task = Task::where('id', $id)->first();
+        $task->is_completed = 0;
+        $task->save();
+        return TasksResource::make($task);
+    }
+
+    public function completeTask($id) {
+        $task = Task::where('id', $id)->first();
+        $task->is_completed = 1;
+        $task->save();
+        return TasksResource::make($task);
     }
 
     /**
