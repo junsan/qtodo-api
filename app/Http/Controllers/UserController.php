@@ -63,8 +63,9 @@ class UserController extends Controller
 
     public function automaticLogin($id) {
         $user = User::where('id', $id)->first();
-        $todoList = TodoList::where('user_id', $user->id)->where('name', 'General')->first();
-        
-        return response()->json(["success" => true, "login" => true, "token" => 'qtodo-token', "email" => $user->email, "id" => $user->id, 'listId' => $todoList->id]);
+        if ($user) { 
+            $todoList = TodoList::where('user_id', $user->id)->where('name', 'General')->first();
+            return response()->json(["success" => true, "login" => true, "token" => 'qtodo-token', "email" => $user->email, "id" => $user->id, 'listId' => $todoList->id]);
+        }
     }
 }
